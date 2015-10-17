@@ -18,7 +18,7 @@
     <style name="ActionBarThemeOverlay" parent="">
         <item name="android:textColorPrimary">@color/ApptivatePrimaryTextColor</item>
         <item name="android:actionMenuTextColor">@color/ApptivatePrimaryTextColor</item>
-        <item name="android:textColorSecondary">@color/ApptivateSecondaryTextColor</item>
+        <item name="android:textColorSecondary">@color/ApptivatePrimaryTextColor</item>
         <item name="android:background">@color/ApptivatePrimaryBackgroundColor</item>
     </style>
 
