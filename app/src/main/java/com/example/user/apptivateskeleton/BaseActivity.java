@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
  */
 public class BaseActivity extends AppCompatActivity {
 
+    static final String APPTIVATE_QUERY = "APPTIVATE_QUERY";
     private Toolbar mToolbar;
 
     protected Toolbar activateToolbar(){
@@ -20,4 +21,11 @@ public class BaseActivity extends AppCompatActivity {
         return mToolbar;
     }
 
+    protected Toolbar activateToolbarWithHomeEnabled(){
+        activateToolbar();
+        if(null != mToolbar){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        return  mToolbar;
+    }
 }

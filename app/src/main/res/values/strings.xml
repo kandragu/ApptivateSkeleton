@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_search">search</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="search_menu">search</string>
+    <string name="searchable_label">Search Query</string>
+    <string name="searchable_hint">Enter photo tabs</string>
 </resources>
