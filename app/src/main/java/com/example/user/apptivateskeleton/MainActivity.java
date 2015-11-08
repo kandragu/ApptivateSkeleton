@@ -1,18 +1,25 @@
 package com.example.user.apptivateskeleton;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class MainActivity extends BaseActivity {
 
     private RecyclerView mRecyclerView;
     private SampleAdapter mSampleAdapter;
+    JsonPlaceholderService jsonPlaceholderService;
+    Post post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +34,40 @@ public class MainActivity extends BaseActivity {
         //ideally data needs to be retrieved and adapter created
         mSampleAdapter = new SampleAdapter();
         mRecyclerView.setAdapter(mSampleAdapter);
+
+        jsonPlaceholderService = RetrofitGenerator.createService(JsonPlaceholderService.class);
+
+    }
+
+    /**
+     * Dispatch onResume() to fragments.  Note that for better inter-operation
+     * with older versions of the platform, at the point of this call the
+     * fragments attached to the activity are <em>not</em> resumed.  This means
+     * that in some cases the previous state may still be saved, not allowing
+     * fragment transactions that modify the state.  To correctly interact
+     * with fragments in their proper state, you should instead override
+     * {@link #onResumeFragments()}.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(null != mSampleAdapter){
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            String query =sharedPref.getString(APPTIVATE_QUERY, "");
+            Call<Post> call = jsonPlaceholderService.getPosts("1");
+            call.enqueue(new Callback<Post>() {
+                @Override
+                public void onResponse(Response<Post> response, Retrofit retrofit) {
+                    int statusCode = response.code();
+                    Post post = response.body();
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    // Log error here since request failed
+                }
+            });
+        }
     }
 
     @Override
