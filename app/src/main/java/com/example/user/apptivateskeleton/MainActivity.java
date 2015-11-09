@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.user.apptivateskeleton.model.Flickr;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -31,11 +34,30 @@ public class MainActivity extends BaseActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //ideally data needs to be retrieved and adapter created
-        mSampleAdapter = new SampleAdapter();
-        mRecyclerView.setAdapter(mSampleAdapter);
+
 
         jsonPlaceholderService = RetrofitGenerator.createService(JsonPlaceholderService.class);
+
+
+        Call<Flickr> call = jsonPlaceholderService.getFlickr();
+        call.enqueue(new Callback<Flickr>() {
+            @Override
+            public void onResponse(Response<Flickr> response, Retrofit retrofit) {
+                int statusCode = response.code();
+                //Post post = response.body();
+                Flickr flickr = response.body();
+
+                //ideally data needs to be retrieved and adapter created
+                mSampleAdapter = new SampleAdapter(getApplicationContext(),flickr);
+                mRecyclerView.setAdapter(mSampleAdapter);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                // Log error here since request failed
+                Log.v("","error");
+            }
+        });
 
     }
 
@@ -54,19 +76,7 @@ public class MainActivity extends BaseActivity {
         if(null != mSampleAdapter){
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             String query =sharedPref.getString(APPTIVATE_QUERY, "");
-            Call<Post> call = jsonPlaceholderService.getPosts("1");
-            call.enqueue(new Callback<Post>() {
-                @Override
-                public void onResponse(Response<Post> response, Retrofit retrofit) {
-                    int statusCode = response.code();
-                    Post post = response.body();
-                }
 
-                @Override
-                public void onFailure(Throwable t) {
-                    // Log error here since request failed
-                }
-            });
         }
     }
 

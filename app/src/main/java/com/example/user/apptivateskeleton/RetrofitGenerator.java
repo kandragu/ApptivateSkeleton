@@ -9,7 +9,7 @@ import retrofit.Retrofit;
  */
 public class RetrofitGenerator {
 
-    public static final String API_BASE_URL = "http://jsonplaceholder.typicode.com";
+    public static final String API_BASE_URL = "https://api.flickr.com/services/feeds/photos_public.gne";
 
     private static OkHttpClient httpClient = new OkHttpClient();
     private static Retrofit.Builder builder =
