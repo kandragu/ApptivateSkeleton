@@ -38,27 +38,35 @@ public class MainActivity extends BaseActivity {
 
         jsonPlaceholderService = RetrofitGenerator.createService(JsonPlaceholderService.class);
 
+        //ideally data needs to be retrieved and adapter created
+        mSampleAdapter = new SampleAdapter(getApplicationContext());
+        mRecyclerView.setAdapter(mSampleAdapter);
 
-        Call<Flickr> call = jsonPlaceholderService.getFlickr();
+        //Call<Flickr> call = jsonPlaceholderService.getFlickr();
+
+        fetchDataFromServer("modi");
+
+    }
+
+    private void fetchDataFromServer(String query) {
+        Call<Flickr> call = jsonPlaceholderService.getSearch(query);
         call.enqueue(new Callback<Flickr>() {
             @Override
             public void onResponse(Response<Flickr> response, Retrofit retrofit) {
                 int statusCode = response.code();
                 //Post post = response.body();
                 Flickr flickr = response.body();
+                mSampleAdapter.setmItems(flickr.getItems());
+                mSampleAdapter.notifyDataSetChanged();
 
-                //ideally data needs to be retrieved and adapter created
-                mSampleAdapter = new SampleAdapter(getApplicationContext(),flickr);
-                mRecyclerView.setAdapter(mSampleAdapter);
             }
 
             @Override
             public void onFailure(Throwable t) {
                 // Log error here since request failed
-                Log.v("","error");
+                Log.v("", "error");
             }
         });
-
     }
 
     /**
@@ -76,7 +84,7 @@ public class MainActivity extends BaseActivity {
         if(null != mSampleAdapter){
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             String query =sharedPref.getString(APPTIVATE_QUERY, "");
-
+            fetchDataFromServer(query);
         }
     }
 

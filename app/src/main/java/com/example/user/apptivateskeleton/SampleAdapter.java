@@ -20,11 +20,15 @@ public class SampleAdapter extends RecyclerView.Adapter<SampleViewHolder> {
    // public static String data[] = new String[] {"1 List","2 List","3 List","4 List","5 List","6 List",
    //                                           "7 List","8 List","9 List","10 List","11 List","12 List"};
 
+    public void setmItems(List<Flickr.Item> mItems) {
+        this.mItems = mItems;
+    }
+
     private List<Flickr.Item> mItems;
     private Context mContext;
 
-    public SampleAdapter(Context context,Flickr flickr) {
-        mItems = flickr.getItems();
+    public SampleAdapter(Context context) {
+
         mContext = context;
     }
 
@@ -56,6 +60,6 @@ public class SampleAdapter extends RecyclerView.Adapter<SampleViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mItems.size()-1;
+        return (mItems !=null)? mItems.size()-1:0;
     }
 }
