@@ -1,4 +1,4 @@
-package com.example.user.apptivateskeleton;
+package com.example.user.apptivateskeleton.model;
 
 /**
  * Created by user on 31/10/2015.

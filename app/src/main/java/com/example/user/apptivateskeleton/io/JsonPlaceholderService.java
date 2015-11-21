@@ -1,5 +1,6 @@
-package com.example.user.apptivateskeleton;
+package com.example.user.apptivateskeleton.io;
 
+import com.example.user.apptivateskeleton.model.Post;
 import com.example.user.apptivateskeleton.model.Flickr;
 
 import retrofit.Call;

@@ -10,7 +10,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.user.apptivateskeleton.io.JsonPlaceholderService;
+import com.example.user.apptivateskeleton.io.RetrofitGenerator;
 import com.example.user.apptivateskeleton.model.Flickr;
+import com.example.user.apptivateskeleton.model.Post;
 
 import retrofit.Call;
 import retrofit.Callback;
